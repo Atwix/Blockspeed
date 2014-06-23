@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Atwix
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+
+ * @category    Atwix
+ * @package     Atwix_Blockspeed
+ * @author      Atwix Core Team
+ * @copyright   Copyright (c) 2014 Atwix (http://www.atwix.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Atwix_Blockspeed>
+            <version>0.0.1</version>
+        </Atwix_Blockspeed>
+    </modules>
+    <global>
+        <blocks>
+            <atwix_blockspeed>
+                <class>Atwix_Blockspeed_Block</class>
+            </atwix_blockspeed>
+        </blocks>
+        <models>
+            <atwix_blockspeed>
+                <class>Atwix_Blockspeed_Model</class>
+                <resourceModel>atwix_blockspeed_resource</resourceModel>
+            </atwix_blockspeed>
+            <atwix_blockspeed_resource>
+                <class>Atwix_Blockspeed_Model_Resource</class>
+                <deprecatedNode>atwix_blockspeed_eav_mysql4</deprecatedNode>
+                <entities>
+                    <rendertime>
+                        <table>atwix_blockspeed_rendertime</table>
+                    </rendertime>
+                </entities>
+            </atwix_blockspeed_resource>
+        </models>
+        <helpers>
+            <atwix_blockspeed>
+                <class>Atwix_Blockspeed_Helper</class>
+            </atwix_blockspeed>
+        </helpers>
+        <resources>
+            <atwix_blockspeed_setup>
+                <setup>
+                    <module>Atwix_Blockspeed</module>
+                </setup>
+            </atwix_blockspeed_setup>
+        </resources>
+    </global>
+    <frontend>
+        <events>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <atwix_blockspeed>
+                        <type>singleton</type>
+                        <class>atwix_blockspeed/observer</class>
+                        <method>blockHtmlStart</method>
+                    </atwix_blockspeed>
+                </observers>
+            </core_block_abstract_to_html_before>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <atwix_blockspeed>
+                        <type>singleton</type>
+                        <class>atwix_blockspeed/observer</class>
+                        <method>blockHtmlEnd</method>
+                    </atwix_blockspeed>
+                </observers>
+            </core_block_abstract_to_html_after>
+            <controller_action_postdispatch>
+                <observers>
+                    <atwix_blockspeed>
+                        <type>singleton</type>
+                        <class>atwix_blockspeed/observer</class>
+                        <method>controllerEnd</method>
+                    </atwix_blockspeed>
+                </observers>
+            </controller_action_postdispatch>
+        </events>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <atwix_blockspeed>
+                                            <title>Atwix Block Speed</title>
+                                        </atwix_blockspeed>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <blockspeed before="Mage_Adminhtml">Atwix_Blockspeed_Adminhtml</blockspeed>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>
